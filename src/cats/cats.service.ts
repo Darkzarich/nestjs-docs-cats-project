@@ -29,24 +29,16 @@ export class CatsService {
     return cat;
   }
 
-  update(id: string, updateCatDto: UpdateCatDto) {
-    const cat = this.cats.find((cat) => cat.id === id);
-
-    if (!cat) {
-      throw new NotFoundException('Cat by provided id is not found');
-    }
+  update(id: string, updateCatDto: UpdateCatDto): Cat {
+    const cat = this.findById(id);
 
     Object.assign(cat, updateCatDto);
 
     return cat;
   }
 
-  delete(id: string) {
-    const cat = this.cats.find((cat) => cat.id === id);
-
-    if (!cat) {
-      throw new NotFoundException('Cat by provided id is not found');
-    }
+  delete(id: string): Cat[] {
+    const cat = this.findById(id);
 
     return this.cats.splice(this.cats.indexOf(cat), 1);
   }
