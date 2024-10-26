@@ -6,7 +6,7 @@ import {
   HttpCode,
   Param,
   Post,
-  Put,
+  Patch,
   Query,
 } from '@nestjs/common';
 import { CreateCatDto } from 'src/cats/dto/create-cat.dto';
@@ -32,7 +32,7 @@ export class CatsController {
     return this.catsService.findById(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() updateCatDto: Partial<CreateCatDto>) {
     return this.catsService.update(id, updateCatDto);
   }
