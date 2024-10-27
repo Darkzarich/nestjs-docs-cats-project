@@ -1,29 +1,58 @@
 ## Description
 
-Just a mini-project to try out some Nest.js concepts and examples from the docs.
+Mini fullstack project to try out some Nest.js concepts and examples from the docs as well as serving static content (for SPA).
 
-Directory hoppscotch contains the project's [hoppscotch](https://hoppscotch.io/) specification file.
+For the server side, the project uses [Nest.js](https://nestjs.com/) and [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) for the client side.
+
+The project's [hoppscotch](https://hoppscotch.io/) specification file is located in the `hoppscotch` directory.
+
+Usually you'd serve the client side using a static file server like [Nginx](https://www.nginx.com/) or [Apache](https://httpd.apache.org/) but for the sake of simplicity, the project serves the client side from NestJS application. But during development, the client side will be served from [Vite](https://vitejs.dev/)'s dev server.
 
 ## Project setup
 
+Install both server and client dependencies
+
 ```bash
-$ pnpm install
+$ pnpm -r i
 ```
 
-## Compile and run the project
+## Scripts
+
+### Development
+
+To work on both server and client sides at the same time run both separately in watch mode:
+
+#### Server (NestJS):
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
+# server watch mode
 $ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
 ```
 
-## Run tests
+#### Client (React + TypeScript):
+
+```bash
+# client watch mode
+$ pnpm --prefix client dev
+```
+
+### Build
+
+Sequence of commands to build and run the project for production:
+
+```bash
+# build the server
+$ pnpm build
+# build (copies dist to the server's dist/client folder)
+$ pnpm --prefix client build
+# run the server
+$ pnpm run start:prod
+
+```
+
+### Tests
+
+#### Server (NestJS):
 
 ```bash
 # unit tests
