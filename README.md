@@ -6,7 +6,7 @@ For the server side, the project uses [Nest.js](https://nestjs.com/) and [React]
 
 The project's [hoppscotch](https://hoppscotch.io/) specification file is located in the `hoppscotch` directory.
 
-Usually you'd serve the client side using a static file server like [Nginx](https://www.nginx.com/) or [Apache](https://httpd.apache.org/) but for the sake of simplicity, the project serves the client side from NestJS application. But during development, the client side will be served from [Vite](https://vitejs.dev/)'s dev server.
+**NOTE**: Usually you'd serve the client side using a static file server like [Nginx](https://www.nginx.com/) or [Apache](https://httpd.apache.org/) but for the sake of simplicity, the project serves the client side from NestJS application. But during development, the client side will be served from [Vite](https://vitejs.dev/)'s dev server.
 
 ## Project setup
 

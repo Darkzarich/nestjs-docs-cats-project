@@ -17,7 +17,8 @@ function App() {
     try {
       setIsLoading(true);
 
-      const response = await axios.get<Cat[]>('http://localhost:3000/api/cats');
+      const response = await axios.get<Cat[]>('/api/cats');
+      // const response = await axios.get<Cat[]>('http://localhost:3000/api/cats');
 
       setCats(response.data);
       setIsError(false);
