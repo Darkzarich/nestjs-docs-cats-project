@@ -15,7 +15,7 @@ import { FindCatsDto } from './dto/find-cats.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { FindByIdDto } from './dto/find-by-id.dto';
 
-@Controller('cats')
+@Controller('api/cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
