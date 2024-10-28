@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-type Cat = {
-  id: string;
-  name: string;
-  age: number;
-  breed: string;
-};
+import * as api from './api';
+import { Cat } from './types';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,12 +11,15 @@ function App() {
     try {
       setIsLoading(true);
 
-      const response = await axios.get<Cat[]>('/api/cats');
-      // const response = await axios.get<Cat[]>('http://localhost:3000/api/cats');
+      const response = await api.fetchCats();
+
+      if (!response.data) {
+        return;
+      }
 
       setCats(response.data);
       setIsError(false);
-    } catch (error) {
+    } catch {
       setIsError(true);
     } finally {
       setIsLoading(false);
