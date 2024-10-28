@@ -1,0 +1,11 @@
+.edit-cat-modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-cat-modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}

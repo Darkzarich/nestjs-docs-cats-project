@@ -1,0 +1,9 @@
+.base-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 16px;
+  cursor: pointer;
+}

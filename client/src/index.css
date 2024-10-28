@@ -1,12 +1,22 @@
 :root {
   font-family: sans-serif;
+
   --card-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  --color-primary: #3700b3;
+  --color-error: crimson;
+  --color-white: #fff;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
+}
+
+.title {
+  display: flex;
+  gap: 10px;
 }
 
 .error {
@@ -27,49 +37,9 @@
   gap: 20px;
 }
 
-.cat {
-  width: 210px;
-  text-align: center;
-  padding: 10px;
-  margin: 10px;
-  box-shadow: var(--card-box-shadow);
-  border-radius: 8px;
-  position: relative;
-}
-
-.cat::after {
-  height: 100%;
-  width: 100%;
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url('/cat-footprint.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: -111px -9px;
-  opacity: 0.1;
-  pointer-events: none;
-}
-
-.button {
+.icon-button {
   background: none;
   border: none;
   cursor: pointer;
-}
-
-.delete-button {
-  color: crimson;
-  position: absolute;
-  right: 3px;
-  top: 1px;
-  font-weight: bold;
-  font-size: 20px;
-  font-family: cursive;
-}
-
-.refresh-button {
-  font-size: 20px;
-  position: relative;
-  bottom: 4px;
+  padding: 0;
 }
