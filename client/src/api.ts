@@ -19,6 +19,6 @@ export function deleteCat(id: Cat['id']) {
   return ApiClient.delete(`/api/cats/${id}`);
 }
 
-export function createCat(cat: Cat) {
+export function createCat(cat: Omit<Cat, 'id'>) {
   return ApiClient.post<Cat>('/api/cats', cat);
 }

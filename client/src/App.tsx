@@ -6,8 +6,11 @@ import { useModal } from './components/Base/BaseModal';
 import {
   Loader as IconLoader,
   RefreshCw as IconRefreshCw,
+  PlusSquare as IconPlusSquare,
 } from 'react-feather';
 import EditCatModal from './components/EditCatModal/EditCatModal';
+import CatCardPlaceholder from './components/CatCard/CatCardPlaceholder';
+import AddCatModal from './components/AddCatModal/AddCatModal';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,10 +18,17 @@ function App() {
   const [cats, setCats] = useState<Cat[]>([]);
 
   const [editedCat, setEditedCat] = useState<Cat>();
+
   const {
-    isShow: isShowEditModal,
-    showModal: showEditModal,
-    hideModal: hideEditModal,
+    isShow: isShowEditCatModal,
+    showModal: showEditCatModal,
+    hideModal: hideEditCatModal,
+  } = useModal();
+
+  const {
+    isShow: isShowAddCatModal,
+    showModal: showAddCatModal,
+    hideModal: hideAddCatModal,
   } = useModal();
 
   const fetchCats = async () => {
@@ -55,7 +65,7 @@ function App() {
 
   const handleOpenEditCatModal = (cat: Cat) => {
     setEditedCat(cat);
-    showEditModal();
+    showEditCatModal();
   };
 
   const handleEditCat = async (updatedCat: Cat) => {
@@ -76,6 +86,19 @@ function App() {
 
       // For simplicity, we just alert the error
       window.alert(`Error updating a cat: ${error.response?.data.message}`);
+    }
+  };
+
+  const handleAddCat = async (cat: Omit<Cat, 'id'>) => {
+    try {
+      await Api.createCat(cat);
+
+      fetchCats();
+    } catch (e) {
+      const error = e as Api.ApiError;
+
+      // For simplicity, we just alert the error
+      window.alert(`Error adding a cat: ${error.response?.data.message}`);
     }
   };
 
@@ -119,16 +142,35 @@ function App() {
                 onEdit={handleOpenEditCatModal}
               />
             ))}
+
+            <CatCardPlaceholder>
+              <IconPlusSquare
+                onClick={showAddCatModal}
+                className="icon-button"
+                size="48px"
+                color="var(--color-primary)"
+              />
+            </CatCardPlaceholder>
           </div>
         </>
       )}
 
-      <EditCatModal
-        isShow={isShowEditModal}
-        onClose={hideEditModal}
-        onSave={handleEditCat}
-        cat={editedCat}
-      />
+      {isShowEditCatModal && (
+        <EditCatModal
+          isShow={isShowEditCatModal}
+          onClose={hideEditCatModal}
+          onSave={handleEditCat}
+          cat={editedCat}
+        />
+      )}
+
+      {isShowAddCatModal && (
+        <AddCatModal
+          isShow={isShowAddCatModal}
+          onClose={hideAddCatModal}
+          onSubmit={handleAddCat}
+        />
+      )}
     </div>
   );
 }

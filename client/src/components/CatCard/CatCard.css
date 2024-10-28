@@ -1,5 +1,10 @@
 .cat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 210px;
+  min-height: 151px;
   text-align: center;
   padding: 10px;
   margin: 10px;
@@ -30,4 +35,13 @@
   top: 1px;
   gap: 4px;
   position: absolute;
+}
+
+.cat__name {
+  margin-top: 0;
+}
+
+.cat__data {
+  margin-top: 0;
+  margin-bottom: 10px;
 }

@@ -1,7 +1,7 @@
 import './BaseButton.css';
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;

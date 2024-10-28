@@ -30,11 +30,11 @@ function CatCard({ cat, onDelete, onEdit }: Props) {
         </button>
       </div>
 
-      <h2>{cat.name}</h2>
+      <h2 className="cat__name">{cat.name}</h2>
 
-      <p>Age: {cat.age}</p>
+      <p className="cat__data">Age: {cat.age}</p>
 
-      <p>Breed: {cat.breed}</p>
+      <p className="cat__data">Breed: {cat.breed}</p>
     </div>
   );
 }
