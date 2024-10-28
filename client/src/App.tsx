@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as api from './api';
 import { Cat } from './types';
+import CatCard from './components/CatCard';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,31 +27,45 @@ function App() {
     }
   };
 
+  const deleteCat = async (id: string) => {
+    try {
+      await api.deleteCat(id);
+      fetchCats();
+    } catch {
+      setIsError(true);
+    }
+  };
+
   useEffect(() => {
     fetchCats();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="container">
-      <h1>Cats</h1>
+      <h1>
+        Cats
+        <button
+          className="button refresh-button"
+          title="Refresh"
+          onClick={fetchCats}
+          disabled={isLoading}
+        >
+          {isLoading ? '⏳' : '🔄'}
+        </button>
+      </h1>
 
-      {isError && <div className="error">Error fetching cats</div>}
+      {isLoading && <div>Loading...</div>}
 
-      {!isError && (
+      {!isLoading && isError && (
+        <div className="error">Error fetching cats</div>
+      )}
+
+      {!isLoading && !isError && (
         <>
           <p className="cat-meta">Number of cats: {cats.length}</p>
-
           <div className="cats">
             {cats.map((cat) => (
-              <div className="cat" key={cat.id}>
-                <h2>{cat.name}</h2>
-                <p>Age: {cat.age}</p>
-                <p>Breed: {cat.breed}</p>
-              </div>
+              <CatCard key={cat.id} cat={cat} onDelete={deleteCat} />
             ))}
           </div>
         </>
