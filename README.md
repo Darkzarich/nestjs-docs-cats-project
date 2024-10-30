@@ -1,8 +1,10 @@
 ## Description
 
-Mini fullstack project to try out some Nest.js concepts and examples from the docs as well as serving static content (for SPA).
+Small fullstack project to try out some Nest.js concepts, examples from the docs, design patters and best practices as well as serving client side static content (for SPA).
 
-For the server side, the project uses [Nest.js](https://nestjs.com/) and [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) for the client side.
+For the server side, the project uses [Nest.js](https://nestjs.com/) + [MongoDB](https://www.mongodb.com/) as the database and [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) for the client side.
+
+To work with the data the project implements **Repository Pattern** for study purposes.
 
 The project's [hoppscotch](https://hoppscotch.io/) specification file is located in the `hoppscotch` directory.
 
