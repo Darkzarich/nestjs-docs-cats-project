@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { CatsModule } from './cats/cats.module';
-import { LoggerMiddleware } from './logger/logger.middleware';
+import { LoggerMiddleware } from './common/logger/logger.middleware';
 import { CatsController } from './cats/cats.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';

@@ -1,26 +1,30 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Cat } from './interfaces/cat.interface';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { FindCatsDto } from './dto/find-cats.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { FindByIdDto } from './dto/find-by-id.dto';
+import {
+  CATS_REPOSITORY,
+  ICatsRepository,
+} from './repositories/cats.repository.interface';
 
 @Injectable()
 export class CatsService {
-  private readonly cats: Cat[] = [];
+  constructor(
+    @Inject(CATS_REPOSITORY) private catsRepository: ICatsRepository,
+  ) {}
 
   create(catDto: CreateCatDto) {
-    this.cats.push({
-      id: crypto.randomUUID(),
-      ...catDto,
-    });
+    this.catsRepository.create(catDto);
   }
 
   findAll(findCatsDto: FindCatsDto = {}): Cat[] {
-    return this.cats.slice(0, findCatsDto.limit);
+    return this.catsRepository.findAll(findCatsDto);
   }
 
-  findById(id: string) {
-    const cat = this.cats.find((cat) => cat.id === id);
+  findById({ id }: FindByIdDto): Cat {
+    const cat = this.catsRepository.findById({ id });
 
     if (!cat) {
       throw new NotFoundException('Cat by provided id is not found');
@@ -30,16 +34,17 @@ export class CatsService {
   }
 
   update(id: string, updateCatDto: UpdateCatDto): Cat {
-    const cat = this.findById(id);
+    const cat = this.findById({ id });
 
     Object.assign(cat, updateCatDto);
 
     return cat;
   }
 
-  delete(id: string): Cat[] {
-    const cat = this.findById(id);
+  delete(id: string) {
+    // Check if cat exists
+    this.findById({ id });
 
-    return this.cats.splice(this.cats.indexOf(cat), 1);
+    this.catsRepository.delete(id);
   }
 }

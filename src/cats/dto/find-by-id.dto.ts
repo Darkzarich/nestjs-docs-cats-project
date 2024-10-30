@@ -1,8 +1,6 @@
-import { IsUUID } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class FindByIdDto {
-  @IsUUID(4, {
-    message: 'id must be an UUID (v4)',
-  })
+  @IsNotEmpty()
   id: string;
 }

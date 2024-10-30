@@ -31,7 +31,7 @@ export class CatsController {
 
   @Get(':id')
   findOne(@Param() { id }: FindByIdDto) {
-    return this.catsService.findById(id);
+    return this.catsService.findById({ id });
   }
 
   @Patch(':id')
