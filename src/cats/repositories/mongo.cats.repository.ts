@@ -1,27 +1,39 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import { Injectable } from '@nestjs/common';
 import { UpdateCatDto } from '../dto/update-cat.dto';
-import { Cat } from '../interfaces/cat.interface';
+import { Cat } from '../schemas/cat.schema';
 import { ICatsRepository } from './cats.repository.interface';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { FindByIdDto } from '../dto/find-by-id.dto';
+import { FindCatsDto } from '../dto/find-cats.dto';
 
 @Injectable()
 export class MongoCatsRepository implements ICatsRepository {
-  create(cat: Cat): Cat {
-    throw new Error('Method not implemented.');
+  constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
+
+  async create(cat: Cat) {
+    const newCat = await this.catModel.create(cat);
+
+    return newCat.toJSON();
   }
-  findAll(limit: number): Cat[] {
-    throw new Error('Method not implemented.');
+  async findAll({ limit }: FindCatsDto) {
+    const cats = await this.catModel.find().limit(limit);
+
+    return cats.map((cat) => cat.toJSON());
   }
-  findById(id: string): Cat {
-    throw new Error('Method not implemented.');
+  async findById({ id }: FindByIdDto) {
+    const cat = await this.catModel.findById(id);
+
+    return cat.toJSON();
   }
-  update(id: string, updateCatDto: UpdateCatDto): Cat {
-    throw new Error('Method not implemented.');
+  async update(id: string, updateCatDto: UpdateCatDto) {
+    const updatedCat = await this.catModel.findByIdAndUpdate(id, updateCatDto, {
+      new: true,
+    });
+
+    return updatedCat.toJSON();
   }
-  delete(id: string): void {
-    throw new Error('Method not implemented.');
+  async delete(id: string) {
+    await this.catModel.findByIdAndDelete(id);
   }
 }

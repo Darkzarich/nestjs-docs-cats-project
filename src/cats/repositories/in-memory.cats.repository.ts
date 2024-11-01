@@ -10,7 +10,7 @@ import { CreateCatDto } from '../dto/create-cat.dto';
 export class InMemoryCatsRepository implements ICatsRepository {
   private readonly cats: Cat[] = [];
 
-  create(cat: CreateCatDto) {
+  async create(cat: CreateCatDto) {
     const newCat = {
       id: crypto.randomUUID(),
       ...cat,
@@ -21,17 +21,17 @@ export class InMemoryCatsRepository implements ICatsRepository {
     return newCat;
   }
 
-  findAll({ limit }: FindCatsDto) {
+  async findAll({ limit }: FindCatsDto) {
     return this.cats.slice(0, limit);
   }
 
-  findById({ id }: FindByIdDto) {
+  async findById({ id }: FindByIdDto) {
     const cat = this.cats.find((cat) => cat.id === id);
 
     return cat;
   }
 
-  update(id: string, updateCatDto: UpdateCatDto): Cat {
+  async update(id: string, updateCatDto: UpdateCatDto) {
     const cat = this.findById({ id });
 
     Object.assign(cat, updateCatDto);
@@ -39,9 +39,9 @@ export class InMemoryCatsRepository implements ICatsRepository {
     return cat;
   }
 
-  delete(id: string): Cat[] {
-    const cat = this.findById({ id });
+  async delete(id: string) {
+    const cat = await this.findById({ id });
 
-    return this.cats.splice(this.cats.indexOf(cat), 1);
+    this.cats.splice(this.cats.indexOf(cat), 1);
   }
 }
