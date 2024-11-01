@@ -9,6 +9,7 @@ import { join } from 'path';
 
 @Module({
   imports: [
+    // Loading .env file variables
     ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

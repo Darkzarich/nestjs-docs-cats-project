@@ -48,24 +48,28 @@ function EditCatModal({ cat, isShow, onClose, onSave }: Props) {
       title={`Edit cat "${cat?.name}"`}
       onClose={onClose}
     >
-      <div className="edit-cat-modal__fields">
-        <BaseInput label="Name" value={name} onChange={onNameChange} />
+      <form>
+        <div className="edit-cat-modal__fields">
+          <BaseInput label="Name" value={name} onChange={onNameChange} />
 
-        <BaseInput
-          label="Age"
-          type="number"
-          value={age}
-          onChange={onAgeChange}
-        />
+          <BaseInput
+            label="Age"
+            type="number"
+            value={age}
+            onChange={onAgeChange}
+          />
 
-        <BaseInput label="Breed" value={breed} onChange={onBreedChange} />
-      </div>
+          <BaseInput label="Breed" value={breed} onChange={onBreedChange} />
+        </div>
 
-      <div className="edit-cat-modal__actions">
-        <BaseButton onClick={handleSave}>Save</BaseButton>
+        <div className="edit-cat-modal__actions">
+          <BaseButton type="submit" onClick={handleSave}>
+            Save
+          </BaseButton>
 
-        <BaseButton onClick={onClose}>Cancel</BaseButton>
-      </div>
+          <BaseButton onClick={onClose}>Cancel</BaseButton>
+        </div>
+      </form>
     </BaseModal>
   );
 }

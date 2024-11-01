@@ -5,11 +5,19 @@ type Props = {
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  type?: 'button' | 'submit' | 'reset';
 };
 
-function BaseButton({ children, onClick, disabled, className }: Props) {
+function BaseButton({
+  children,
+  type = 'button',
+  onClick,
+  disabled,
+  className,
+}: Props) {
   return (
     <button
+      type={type}
       className={`base-button ${className || ''}`}
       onClick={onClick}
       disabled={disabled}

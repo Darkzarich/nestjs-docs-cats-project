@@ -22,26 +22,32 @@ function AddCatModal({ isShow, onClose, onSubmit }: Props) {
 
   return (
     <BaseModal isShow={isShow} title={`Add a cat`} onClose={onClose}>
-      <div className="add-cat-modal__fields">
-        <BaseInput label="Name" value={name} onChange={onNameChange} />
+      <form>
+        <div className="add-cat-modal__fields">
+          <BaseInput label="Name" value={name} onChange={onNameChange} />
 
-        <BaseInput
-          label="Age"
-          type="number"
-          value={age}
-          onChange={onAgeChange}
-        />
+          <BaseInput
+            label="Age"
+            type="number"
+            value={age}
+            onChange={onAgeChange}
+          />
 
-        <BaseInput label="Breed" value={breed} onChange={onBreedChange} />
-      </div>
+          <BaseInput label="Breed" value={breed} onChange={onBreedChange} />
+        </div>
 
-      <div className="add-cat-modal__actions">
-        <BaseButton onClick={handleSave} disabled={!name || !age || !breed}>
-          Finish
-        </BaseButton>
+        <div className="add-cat-modal__actions">
+          <BaseButton
+            type="submit"
+            onClick={handleSave}
+            disabled={!name || !age || !breed}
+          >
+            Finish
+          </BaseButton>
 
-        <BaseButton onClick={onClose}>Cancel</BaseButton>
-      </div>
+          <BaseButton onClick={onClose}>Cancel</BaseButton>
+        </div>
+      </form>
     </BaseModal>
   );
 }
