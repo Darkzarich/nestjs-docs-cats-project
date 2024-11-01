@@ -18,6 +18,13 @@ Install both server and client dependencies
 $ pnpm -r i
 ```
 
+Copy and fill the `.env` file with the required environment variables, most importantly the `MONGODB_URL` variable:
+
+```bash
+$ cp .env.example .env
+$ nano .env
+```
+
 ## Scripts
 
 ### Development
