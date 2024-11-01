@@ -63,7 +63,11 @@ function EditCatModal({ cat, isShow, onClose, onSave }: Props) {
         </div>
 
         <div className="edit-cat-modal__actions">
-          <BaseButton type="submit" onClick={handleSave}>
+          <BaseButton
+            type="submit"
+            disabled={!name || !age || !breed}
+            onClick={handleSave}
+          >
             Save
           </BaseButton>
 
