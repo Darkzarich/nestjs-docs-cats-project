@@ -3,11 +3,18 @@ import { HydratedDocument } from 'mongoose';
 
 @Schema({
   toJSON: {
-    virtuals: true,
     versionKey: false,
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+
+      return ret;
+    },
   },
 })
 export class User {
+  id: string;
+
   @Prop({ required: true, unique: true })
   login: string;
 

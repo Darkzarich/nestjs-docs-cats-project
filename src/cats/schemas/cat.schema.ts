@@ -14,6 +14,8 @@ import { HydratedDocument } from 'mongoose';
   },
 })
 export class Cat {
+  id: string;
+
   @Prop()
   name: string;
 

@@ -24,7 +24,10 @@ export class UserService {
 
     const user = await this.userRepository.create(signUpDto);
 
-    return user;
+    return {
+      id: user.id,
+      login: user.login,
+    };
   }
 
   async signIn(signInDto: SignInDto) {
@@ -40,7 +43,10 @@ export class UserService {
       throw new WrongCredentialsError();
     }
 
-    return user;
+    return {
+      id: user.id,
+      login: user.login,
+    };
   }
 
   // findOne(id: number) {
