@@ -3,6 +3,7 @@ import BaseModal from '../Base/BaseModal';
 import BaseButton from '../Base/BaseButton/BaseButton';
 import { Cat } from '../../types';
 import './AddCatModal.css';
+import { createPortal } from 'react-dom';
 
 type Props = {
   isShow?: boolean;
@@ -12,7 +13,7 @@ type Props = {
 
 function AddCatModal({ isShow, onClose, onSubmit }: Props) {
   const { value: name, onChange: onNameChange } = useInput('');
-  const { value: age, onChange: onAgeChange } = useInput('1');
+  const { value: age, onChange: onAgeChange } = useInput('0');
   const { value: breed, onChange: onBreedChange } = useInput('');
 
   const handleSave = () => {
@@ -20,7 +21,7 @@ function AddCatModal({ isShow, onClose, onSubmit }: Props) {
     onClose();
   };
 
-  return (
+  return createPortal(
     <BaseModal isShow={isShow} title={`Add a cat`} onClose={onClose}>
       <form>
         <div className="add-cat-modal__fields">
@@ -48,7 +49,8 @@ function AddCatModal({ isShow, onClose, onSubmit }: Props) {
           <BaseButton onClick={onClose}>Cancel</BaseButton>
         </div>
       </form>
-    </BaseModal>
+    </BaseModal>,
+    document.body,
   );
 }
 

@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import BaseInput, { useInput } from '../Base/BaseInput';
 import BaseModal from '../Base/BaseModal';
 import BaseButton from '../Base/BaseButton/BaseButton';
 import { Cat } from '../../types';
 import './EditCatModal.css';
+import { createPortal } from 'react-dom';
 
 type Props = {
   cat?: Cat;
@@ -42,7 +43,7 @@ function EditCatModal({ cat, isShow, onClose, onSave }: Props) {
     }
   }, [cat, setName, setAge, setBreed]);
 
-  return (
+  return createPortal(
     <BaseModal
       isShow={isShow}
       title={`Edit cat "${cat?.name}"`}
@@ -74,7 +75,8 @@ function EditCatModal({ cat, isShow, onClose, onSave }: Props) {
           <BaseButton onClick={onClose}>Cancel</BaseButton>
         </div>
       </form>
-    </BaseModal>
+    </BaseModal>,
+    document.body,
   );
 }
 
