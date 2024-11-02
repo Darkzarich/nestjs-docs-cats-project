@@ -28,6 +28,10 @@
   pointer-events: none;
 }
 
+.cat__name {
+  margin-bottom: 16px;
+}
+
 .cat__toolbar {
   display: flex;
   justify-content: space-between;

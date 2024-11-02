@@ -7,6 +7,7 @@
   --color-primary: #3700b3;
   --color-error: crimson;
   --color-white: #fff;
+  --color-disabled: #ccc;
 }
 
 *,
@@ -15,14 +16,29 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
 .container {
   max-width: 800px;
   margin: 0 auto;
 }
 
-.title {
+.loader {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .error {
@@ -34,7 +50,10 @@
 
 .cat-meta {
   color: gray;
-  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 20px 0;
 }
 
 .cats {
@@ -48,4 +67,9 @@
   border: none;
   cursor: pointer;
   padding: 0;
+}
+
+.icon-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

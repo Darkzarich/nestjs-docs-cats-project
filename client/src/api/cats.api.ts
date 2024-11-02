@@ -1,11 +1,5 @@
-import axios, { AxiosError } from 'axios';
 import { Cat } from './types';
-
-const ApiClient = axios.create({
-  baseURL: import.meta.env.DEV ? 'http://localhost:3000' : '',
-});
-
-export type ApiError = AxiosError<{ message: string; code: string }>;
+import { ApiClient } from './client';
 
 export function fetchCats() {
   return ApiClient.get<Cat[]>('/api/cats');

@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
-import * as Api from './api';
-import { Cat } from './types';
+import { Api, ApiError } from './api';
+import { Cat } from './api/types';
 import CatCard from './components/CatCard/CatCard';
 import { useModal } from './components/Base/BaseModal';
 import {
   Loader as IconLoader,
   RefreshCw as IconRefreshCw,
-  PlusSquare as IconPlusSquare,
 } from 'react-feather';
 import EditCatModal from './components/EditCatModal/EditCatModal';
 import CatCardPlaceholder from './components/CatCard/CatCardPlaceholder';
 import AddCatModal from './components/AddCatModal/AddCatModal';
+// import { useUserStore } from './stores/user.store';
+import Header from './components/Header/Header';
+import BaseButton from './components/Base/BaseButton/BaseButton';
+import { useUserStore } from './stores/user.store';
 
 function App() {
+  const user = useUserStore((state) => state.user);
+
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [cats, setCats] = useState<Cat[]>([]);
@@ -56,7 +61,7 @@ function App() {
 
       setCats(cats.filter((cat) => cat.id !== id));
     } catch (e) {
-      const error = e as Api.ApiError;
+      const error = e as ApiError;
 
       // For simplicity, we just alert the error
       window.alert(`Error deleting a cat: ${error.response?.data.message}`);
@@ -82,11 +87,19 @@ function App() {
         prevCats.map((cat) => (cat.id === updatedCat.id ? updatedCat : cat)),
       );
     } catch (e) {
-      const error = e as Api.ApiError;
+      const error = e as ApiError;
 
       // For simplicity, we just alert the error
       window.alert(`Error updating a cat: ${error.response?.data.message}`);
     }
+  };
+
+  const handleShowAddCatModal = () => {
+    if (!user) {
+      return;
+    }
+
+    showAddCatModal();
   };
 
   const handleAddCat = async (cat: Omit<Cat, 'id'>) => {
@@ -95,7 +108,7 @@ function App() {
 
       fetchCats();
     } catch (e) {
-      const error = e as Api.ApiError;
+      const error = e as ApiError;
 
       // For simplicity, we just alert the error
       window.alert(`Error adding a cat: ${error.response?.data.message}`);
@@ -107,71 +120,66 @@ function App() {
   }, []);
 
   return (
-    <div className="container">
-      <h1 className="title">
-        Cats
-        <button
-          className="icon-button"
-          title="Refresh"
-          onClick={fetchCats}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <IconLoader />
-          ) : (
-            <IconRefreshCw color="var(--color-primary)" />
-          )}
-        </button>
-      </h1>
+    <>
+      <Header />
 
-      {isLoading && <div>Loading...</div>}
+      <div className="container">
+        {isLoading && <div className="loader">Loading...</div>}
 
-      {!isLoading && isError && (
-        <div className="error">Error fetching cats</div>
-      )}
+        {!isLoading && isError && (
+          <div className="error">Error fetching cats</div>
+        )}
 
-      {!isLoading && !isError && (
-        <>
-          <p className="cat-meta">Number of cats: {cats.length}</p>
-          <div className="cats">
-            {cats.map((cat) => (
-              <CatCard
-                key={cat.id}
-                cat={cat}
-                onDelete={deleteCat}
-                onEdit={handleOpenEditCatModal}
-              />
-            ))}
-
-            <CatCardPlaceholder>
-              <IconPlusSquare
-                onClick={showAddCatModal}
+        {!isLoading && !isError && (
+          <>
+            <div className="cat-meta">
+              Number of cats: {cats.length}
+              <BaseButton
                 className="icon-button"
-                size="48px"
-                color="var(--color-primary)"
+                onClick={fetchCats}
+                disabled={isLoading}
+              >
+                Update
+                {isLoading ? (
+                  <IconLoader size={16} />
+                ) : (
+                  <IconRefreshCw size={16} />
+                )}
+              </BaseButton>
+            </div>
+            <div className="cats">
+              <CatCardPlaceholder
+                onClick={handleShowAddCatModal}
+                isDisabled={!user}
               />
-            </CatCardPlaceholder>
-          </div>
-        </>
-      )}
 
-      {isShowEditCatModal && (
+              {cats.map((cat) => (
+                <CatCard
+                  key={cat.id}
+                  cat={cat}
+                  onDelete={deleteCat}
+                  onEdit={handleOpenEditCatModal}
+                  canChange={Boolean(user)}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
         <EditCatModal
           isShow={isShowEditCatModal}
           onClose={hideEditCatModal}
           onSave={handleEditCat}
           cat={editedCat}
         />
-      )}
 
-      {isShowAddCatModal && (
         <AddCatModal
           isShow={isShowAddCatModal}
           onClose={hideAddCatModal}
           onSubmit={handleAddCat}
         />
-      )}
-    </div>
+      </div>
+    </>
   );
 }
 

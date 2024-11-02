@@ -4,3 +4,9 @@ export type Cat = {
   age: number;
   breed: string;
 };
+
+export type User = {
+  id: string;
+  login: string;
+  token: string;
+};

@@ -3,7 +3,7 @@ import './BaseInput.css';
 type Props = {
   value?: string;
   label?: string;
-  type?: 'text' | 'number';
+  type?: 'text' | 'number' | 'password';
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

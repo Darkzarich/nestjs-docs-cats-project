@@ -1,7 +1,7 @@
 import BaseInput, { useInput } from '../Base/BaseInput';
 import BaseModal from '../Base/BaseModal';
 import BaseButton from '../Base/BaseButton/BaseButton';
-import { Cat } from '../../types';
+import { Cat } from '../../api/types';
 import './AddCatModal.css';
 import { createPortal } from 'react-dom';
 
@@ -12,12 +12,27 @@ type Props = {
 };
 
 function AddCatModal({ isShow, onClose, onSubmit }: Props) {
-  const { value: name, onChange: onNameChange } = useInput('');
-  const { value: age, onChange: onAgeChange } = useInput('0');
-  const { value: breed, onChange: onBreedChange } = useInput('');
+  const {
+    value: name,
+    onChange: onNameChange,
+    setValue: setName,
+  } = useInput('');
+
+  const { value: age, onChange: onAgeChange, setValue: setAge } = useInput('0');
+
+  const {
+    value: breed,
+    onChange: onBreedChange,
+    setValue: setBreed,
+  } = useInput('');
 
   const handleSave = () => {
     onSubmit({ name, age: parseInt(age), breed });
+
+    setName('');
+    setAge('0');
+    setBreed('');
+
     onClose();
   };
 

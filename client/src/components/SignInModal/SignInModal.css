@@ -1,0 +1,11 @@
+.sign-in-modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sign-in-modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}

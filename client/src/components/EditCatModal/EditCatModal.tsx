@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import BaseInput, { useInput } from '../Base/BaseInput';
 import BaseModal from '../Base/BaseModal';
 import BaseButton from '../Base/BaseButton/BaseButton';
-import { Cat } from '../../types';
+import { Cat } from '../../api/types';
 import './EditCatModal.css';
 import { createPortal } from 'react-dom';
 
@@ -32,6 +32,11 @@ function EditCatModal({ cat, isShow, onClose, onSave }: Props) {
 
   const handleSave = () => {
     onSave({ id: cat!.id, name, age: parseInt(age), breed });
+
+    setName('');
+    setAge('0');
+    setBreed('');
+
     onClose();
   };
 
