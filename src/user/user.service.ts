@@ -8,11 +8,13 @@ import {
 import { comparePassword } from 'src/common/utils/compare-password';
 import { WrongCredentialsError } from './errors/wrong-credentials';
 import { hashPassword } from 'src/common/utils/hash-password';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
+    private readonly jwtService: JwtService,
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
@@ -24,9 +26,12 @@ export class UserService {
 
     const user = await this.userRepository.create(signUpDto);
 
+    const accessToken = await this.jwtService.signAsync({ id: user.id });
+
     return {
       id: user.id,
       login: user.login,
+      token: accessToken,
     };
   }
 
@@ -43,9 +48,12 @@ export class UserService {
       throw new WrongCredentialsError();
     }
 
+    const accessToken = await this.jwtService.signAsync({ id: user.id });
+
     return {
       id: user.id,
       login: user.login,
+      token: accessToken,
     };
   }
 

@@ -11,7 +11,9 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     // Loading .env file variables
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
@@ -25,8 +27,8 @@ import { UserModule } from './user/user.module';
       rootPath: join(__dirname, '..', 'public'),
       exclude: ['/api/(.*)'],
     }),
-    CatsModule,
     UserModule,
+    CatsModule,
   ],
 })
 export class AppModule implements NestModule {
