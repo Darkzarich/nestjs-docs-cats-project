@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up-dto';
 import { SignInDto } from './dto/sign-in-dto';
 import {
@@ -57,7 +62,20 @@ export class UserService {
     };
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} user`;
-  // }
+  async current(id: string) {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException(['User with this id is not found']);
+    }
+
+    // Renew token so it's expiration date is updated
+    const accessToken = await this.jwtService.signAsync({ id: user.id });
+
+    return {
+      id: user.id,
+      login: user.login,
+      token: accessToken,
+    };
+  }
 }

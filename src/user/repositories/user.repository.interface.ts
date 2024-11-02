@@ -7,4 +7,5 @@ export const USER_REPOSITORY = Symbol('UserRepository');
 export interface IUserRepository {
   create(createCatDto: SignUpDto): Promise<User>;
   findByLogin(findCatsDto: SignInDto): Promise<User | null>;
+  findById(id: string): Promise<User | null>;
 }

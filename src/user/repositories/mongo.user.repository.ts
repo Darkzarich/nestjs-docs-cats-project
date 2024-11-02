@@ -11,7 +11,6 @@ export class MongoUserRepository implements IUserRepository {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
-
   async create(signUpDto: SignUpDto) {
     const newUser = await this.userModel.create(signUpDto);
 
@@ -20,6 +19,14 @@ export class MongoUserRepository implements IUserRepository {
 
   async findByLogin(signInDto: SignInDto) {
     const user = await this.userModel.findOne({ login: signInDto.login });
+
+    if (!user) return null;
+
+    return user.toJSON();
+  }
+
+  async findById(id: string) {
+    const user = await this.userModel.findById(id);
 
     if (!user) return null;
 

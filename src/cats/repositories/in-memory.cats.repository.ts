@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Cat } from 'client/src/types';
+import { Cat } from '../schemas/cat.schema';
 import { UpdateCatDto } from '../dto/update-cat.dto';
 import { ICatsRepository } from './cats.repository.interface';
 import { FindCatsDto } from '../dto/find-cats.dto';

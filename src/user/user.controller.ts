@@ -5,11 +5,15 @@ import {
   UseFilters,
   HttpStatus,
   HttpCode,
+  Get,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { SignUpDto } from './dto/sign-up-dto';
 import { SignInDto } from './dto/sign-in-dto';
 import { MongoExceptionFilter } from 'src/common/filters/mongo-exception.filter';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @Controller('api/user')
 export class UserController {
@@ -27,8 +31,12 @@ export class UserController {
     return this.userService.signIn(signInDto);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
+  @HttpCode(HttpStatus.OK)
+  @Get('current')
+  @UseGuards(AuthGuard)
+  current(@Request() request) {
+    const userId = request['user'].id;
+
+    return this.userService.current(userId);
+  }
 }
