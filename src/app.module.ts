@@ -6,6 +6,7 @@ import { LoggerMiddleware } from './common/logger/logger.middleware';
 import { CatsController } from './cats/cats.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { join } from 'path';
       exclude: ['/api/(.*)'],
     }),
     CatsModule,
+    UserModule,
   ],
 })
 export class AppModule implements NestModule {

@@ -26,7 +26,7 @@ export class CatsService {
     const cat = await this.catsRepository.findById({ id });
 
     if (!cat) {
-      throw new NotFoundException('Cat by provided id is not found');
+      throw new NotFoundException(['Cat by provided id is not found']);
     }
 
     return cat;
