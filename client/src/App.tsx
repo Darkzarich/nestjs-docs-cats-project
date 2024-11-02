@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Api, ApiError } from './api';
-import { Cat } from './api/types';
-import CatCard from './components/CatCard/CatCard';
-import { useModal } from './components/Base/BaseModal';
+import { useShallow } from 'zustand/react/shallow';
 import {
   Loader as IconLoader,
   RefreshCw as IconRefreshCw,
 } from 'react-feather';
+import { Api, ApiError } from './api';
+import { Cat } from './api/types';
+import CatCard from './components/CatCard/CatCard';
+import { useModal } from './components/Base/BaseModal';
 import EditCatModal from './components/EditCatModal/EditCatModal';
 import CatCardPlaceholder from './components/CatCard/CatCardPlaceholder';
 import AddCatModal from './components/AddCatModal/AddCatModal';
@@ -16,7 +17,13 @@ import BaseButton from './components/Base/BaseButton/BaseButton';
 import { useUserStore } from './stores/user.store';
 
 function App() {
-  const user = useUserStore((state) => state.user);
+  const { user, clearUser, setUser } = useUserStore(
+    useShallow((state) => ({
+      user: state.user,
+      clearUser: state.clearUser,
+      setUser: state.setUser,
+    })),
+  );
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -115,7 +122,26 @@ function App() {
     }
   };
 
+  const fetchCurrentUser = async () => {
+    try {
+      if (!user) {
+        return;
+      }
+
+      const res = await Api.fetchCurrentUser();
+
+      if (!res.data) {
+        return;
+      }
+
+      setUser(res.data);
+    } catch {
+      clearUser();
+    }
+  };
+
   useEffect(() => {
+    fetchCurrentUser();
     fetchCats();
   }, []);
 

@@ -22,3 +22,7 @@ export function signUp({
 }) {
   return ApiClient.post<User>('/api/user', { login, password, confirm });
 }
+
+export function fetchCurrentUser() {
+  return ApiClient.get<User>('/api/user/current');
+}

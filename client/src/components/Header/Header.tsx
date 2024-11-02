@@ -1,4 +1,4 @@
-import './Header.css';
+import { useShallow } from 'zustand/react/shallow';
 import { useUserStore } from '../../stores/user.store';
 import SignInModal from '../SignInModal/SignInModal';
 import SignUpModal from '../SignUpModal/SignUpModal';
@@ -6,10 +6,16 @@ import { useModal } from '../Base/BaseModal';
 import { User as IconUser } from 'react-feather';
 import { Api, ApiError } from '../../api';
 
+import './Header.css';
+
 function Header() {
-  const user = useUserStore((state) => state.user);
-  const clearUser = useUserStore((state) => state.clearUser);
-  const setUser = useUserStore((state) => state.setUser);
+  const { user, clearUser, setUser } = useUserStore(
+    useShallow((state) => ({
+      user: state.user,
+      clearUser: state.clearUser,
+      setUser: state.setUser,
+    })),
+  );
 
   const {
     isShow: isShowSignInModal,
