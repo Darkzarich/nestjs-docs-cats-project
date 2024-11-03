@@ -1,4 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { FindCatsDto } from './dto/find-cats.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -14,8 +20,12 @@ export class CatsService {
     @Inject(CATS_REPOSITORY) private catsRepository: ICatsRepository,
   ) {}
 
-  create(catDto: CreateCatDto) {
-    this.catsRepository.create(catDto);
+  create(owner: string, catDto: CreateCatDto) {
+    if (!owner) {
+      throw new BadRequestException(['Owner was not provided']);
+    }
+
+    this.catsRepository.create(owner, catDto);
   }
 
   async findAll(findCatsDto: FindCatsDto = {}) {
@@ -32,16 +42,26 @@ export class CatsService {
     return cat;
   }
 
-  async update(id: string, updateCatDto: UpdateCatDto) {
+  async update(userId: string, id: string, updateCatDto: UpdateCatDto) {
+    await this.doesUserIdOwnCat(userId, id);
+
     const updatedCat = await this.catsRepository.update(id, updateCatDto);
 
     return updatedCat;
   }
 
-  async delete(id: string) {
-    // Check if cat exists
-    this.findById({ id });
+  async delete(userId: string, id: string) {
+    await this.doesUserIdOwnCat(userId, id);
 
     await this.catsRepository.delete(id);
+  }
+
+  private async doesUserIdOwnCat(userId: string, id) {
+    // Checks if cat exists, throws an exception if doesn't
+    const cat = await this.findById({ id });
+
+    if (cat.owner.toString() !== userId) {
+      throw new ForbiddenException(['The current user does not own this cat']);
+    }
   }
 }

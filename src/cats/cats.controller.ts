@@ -9,6 +9,7 @@ import {
   Patch,
   Query,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { CreateCatDto } from 'src/cats/dto/create-cat.dto';
 import { CatsService } from './cats.service';
@@ -23,8 +24,10 @@ export class CatsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  create(@Body() payload: CreateCatDto) {
-    return this.catsService.create(payload);
+  create(@Body() payload: CreateCatDto, @Request() request) {
+    const userId = request['user'].id;
+
+    return this.catsService.create(userId, payload);
   }
 
   @Get()
@@ -39,14 +42,22 @@ export class CatsController {
 
   @Patch(':id')
   @UseGuards(AuthGuard)
-  update(@Param() { id }: FindByIdDto, @Body() updateCatDto: UpdateCatDto) {
-    return this.catsService.update(id, updateCatDto);
+  update(
+    @Param() { id }: FindByIdDto,
+    @Request() request,
+    @Body() updateCatDto: UpdateCatDto,
+  ) {
+    const userId = request['user'].id;
+
+    return this.catsService.update(userId, id, updateCatDto);
   }
 
   @Delete(':id')
   @HttpCode(204) // No Content response on successful deletion
   @UseGuards(AuthGuard)
-  remove(@Param() { id }: FindByIdDto) {
-    this.catsService.delete(id);
+  remove(@Param() { id }: FindByIdDto, @Request() request) {
+    const userId = request['user'].id;
+
+    return this.catsService.delete(userId, id);
   }
 }

@@ -5,14 +5,16 @@ import { ICatsRepository } from './cats.repository.interface';
 import { FindCatsDto } from '../dto/find-cats.dto';
 import { FindByIdDto } from '../dto/find-by-id.dto';
 import { CreateCatDto } from '../dto/create-cat.dto';
+import { User } from 'src/user/schemas/user.schema';
 
 @Injectable()
 export class InMemoryCatsRepository implements ICatsRepository {
   private readonly cats: Cat[] = [];
 
-  async create(cat: CreateCatDto) {
+  async create(owner: User['id'], cat: CreateCatDto) {
     const newCat = {
       id: crypto.randomUUID(),
+      owner,
       ...cat,
     };
 
