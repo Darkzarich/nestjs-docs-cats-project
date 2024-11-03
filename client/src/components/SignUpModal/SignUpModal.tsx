@@ -3,18 +3,17 @@ import BaseModal from '../Base/BaseModal';
 import BaseButton from '../Base/BaseButton/BaseButton';
 import './SignUpModal.css';
 import { createPortal } from 'react-dom';
+import { useUserStore } from '../../stores/user.store';
+import { Api, ApiError } from '../../api';
 
 type Props = {
   isShow?: boolean;
   onClose: () => void;
-  onSubmit: (credentials: {
-    login: string;
-    password: string;
-    confirm: string;
-  }) => void;
 };
 
-function SignUpModal({ isShow, onClose, onSubmit }: Props) {
+function SignUpModal({ isShow, onClose }: Props) {
+  const setUser = useUserStore((state) => state.setUser);
+
   const {
     value: login,
     onChange: onLoginChange,
@@ -31,14 +30,26 @@ function SignUpModal({ isShow, onClose, onSubmit }: Props) {
     setValue: setConfirm,
   } = useInput('');
 
-  const handleSave = () => {
-    onSubmit({ login, password, confirm });
-
+  const handleSignUp = async () => {
     setLogin('');
     setPassword('');
     setConfirm('');
-
     onClose();
+
+    try {
+      const res = await Api.signUp({ login, password, confirm });
+
+      if (!res.data) {
+        return;
+      }
+
+      setUser(res.data);
+    } catch (e) {
+      const error = e as ApiError;
+
+      // For simplicity, we just alert the error
+      window.alert(`Error during sign up: ${error.response?.data.message}`);
+    }
   };
 
   return createPortal(
@@ -65,7 +76,7 @@ function SignUpModal({ isShow, onClose, onSubmit }: Props) {
         <div className="sign-up-modal__actions">
           <BaseButton
             type="submit"
-            onClick={handleSave}
+            onClick={handleSignUp}
             disabled={!login || !password || !confirm || password !== confirm}
           >
             Sign Up

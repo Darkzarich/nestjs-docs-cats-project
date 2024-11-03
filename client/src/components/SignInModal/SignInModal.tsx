@@ -3,14 +3,17 @@ import BaseModal from '../Base/BaseModal';
 import BaseButton from '../Base/BaseButton/BaseButton';
 import './SignInModal.css';
 import { createPortal } from 'react-dom';
+import { Api, ApiError } from '../../api';
+import { useUserStore } from '../../stores/user.store';
 
 type Props = {
   isShow?: boolean;
   onClose: () => void;
-  onSubmit: (credentials: { login: string; password: string }) => void;
 };
 
-function SignInModal({ isShow, onClose, onSubmit }: Props) {
+function SignInModal({ isShow, onClose }: Props) {
+  const setUser = useUserStore((state) => state.setUser);
+
   const {
     value: login,
     onChange: onLoginChange,
@@ -23,13 +26,25 @@ function SignInModal({ isShow, onClose, onSubmit }: Props) {
     setValue: setPassword,
   } = useInput('');
 
-  const handleSave = () => {
-    onSubmit({ login, password });
-
+  const handleSignIn = async () => {
     setLogin('');
     setPassword('');
-
     onClose();
+
+    try {
+      const res = await Api.signIn({ login, password });
+
+      if (!res.data) {
+        return;
+      }
+
+      setUser(res.data);
+    } catch (e) {
+      const error = e as ApiError;
+
+      // For simplicity, we just alert the error
+      window.alert(`Error during sign in: ${error.response?.data.message}`);
+    }
   };
 
   return createPortal(
@@ -49,7 +64,7 @@ function SignInModal({ isShow, onClose, onSubmit }: Props) {
         <div className="sign-in-modal__actions">
           <BaseButton
             type="submit"
-            onClick={handleSave}
+            onClick={handleSignIn}
             disabled={!login || !password}
           >
             Sign In

@@ -4,12 +4,11 @@ import SignInModal from '../SignInModal/SignInModal';
 import SignUpModal from '../SignUpModal/SignUpModal';
 import { useModal } from '../Base/BaseModal';
 import { User as IconUser } from 'react-feather';
-import { Api, ApiError } from '../../api';
 
 import './Header.css';
 
 function Header() {
-  const { user, clearUser, setUser } = useUserStore(
+  const { user, clearUser } = useUserStore(
     useShallow((state) => ({
       user: state.user,
       clearUser: state.clearUser,
@@ -28,54 +27,6 @@ function Header() {
     showModal: showSignUpModal,
     hideModal: hideSignUpModal,
   } = useModal();
-
-  const handleSignIn = async ({
-    login,
-    password,
-  }: {
-    login: string;
-    password: string;
-  }) => {
-    try {
-      const res = await Api.signIn({ login, password });
-
-      if (!res.data) {
-        return;
-      }
-
-      setUser(res.data);
-    } catch (e) {
-      const error = e as ApiError;
-
-      // For simplicity, we just alert the error
-      window.alert(`Error during sign in: ${error.response?.data.message}`);
-    }
-  };
-
-  const handleSignUp = async ({
-    login,
-    password,
-    confirm,
-  }: {
-    login: string;
-    password: string;
-    confirm: string;
-  }) => {
-    try {
-      const res = await Api.signUp({ login, password, confirm });
-
-      if (!res.data) {
-        return;
-      }
-
-      setUser(res.data);
-    } catch (e) {
-      const error = e as ApiError;
-
-      // For simplicity, we just alert the error
-      window.alert(`Error during sign up: ${error.response?.data.message}`);
-    }
-  };
 
   return (
     <header className="header">
@@ -108,17 +59,9 @@ function Header() {
         </div>
       </div>
 
-      <SignInModal
-        isShow={isShowSignInModal}
-        onClose={hideSignInModal}
-        onSubmit={handleSignIn}
-      />
+      <SignInModal isShow={isShowSignInModal} onClose={hideSignInModal} />
 
-      <SignUpModal
-        isShow={isShowSignUpModal}
-        onClose={hideSignUpModal}
-        onSubmit={handleSignUp}
-      />
+      <SignUpModal isShow={isShowSignUpModal} onClose={hideSignUpModal} />
     </header>
   );
 }
