@@ -37,9 +37,17 @@ function CatCard({ cat, onDelete, onEdit, canChange }: Props) {
 
       <h2 className="cat__name">{cat.name}</h2>
 
-      <p className="cat__data">Age: {cat.age}</p>
+      <p className="cat__data">
+        <span className="cat__data-label">Owner:</span> {cat.owner.login}
+      </p>
 
-      <p className="cat__data">Breed: {cat.breed}</p>
+      <p className="cat__data">
+        <span className="cat__data-label">Age:</span> {cat.age}
+      </p>
+
+      <p className="cat__data">
+        <span className="cat__data-label">Breed:</span> {cat.breed}
+      </p>
     </div>
   );
 }

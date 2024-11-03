@@ -185,7 +185,7 @@ function App() {
                   cat={cat}
                   onDelete={deleteCat}
                   onEdit={handleOpenEditCatModal}
-                  canChange={Boolean(user)}
+                  canChange={!!user && user.id === cat.owner.id}
                 />
               ))}
             </div>
