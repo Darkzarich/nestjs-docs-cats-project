@@ -4,7 +4,11 @@ Small fullstack project to try out some Nest.js concepts, examples from the docs
 
 For the server side, the project uses [Nest.js](https://nestjs.com/) + [MongoDB](https://www.mongodb.com/) as the database and [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) for the client side.
 
-To work with the data the project implements **Repository Pattern** for study purposes.
+Key features:
+
+- **CRUD** operations for Cats. Only authenticated users can create cats and only the owner can delete or update them.
+- JWT based **Authentication** (for demo reasons the token is valid for 60 seconds).
+- Implements **Repository Pattern** to work with the database models.
 
 The project's [hoppscotch](https://hoppscotch.io/) specification file is located in the `hoppscotch` directory.
 
