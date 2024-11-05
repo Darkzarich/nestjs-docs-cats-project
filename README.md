@@ -29,6 +29,16 @@ $ cp .env.example .env
 $ nano .env
 ```
 
+Since the project uses [MongoDB](https://www.mongodb.com/) as the database, you'll need to install the [MongoDB Community Server](https://www.mongodb.com/try/download/community) and start it.
+Alternatively, you can use Docker to run the MongoDB container:
+
+```bash
+# start the container
+$ docker run -d -p 27017:27017 mongo
+```
+
+After that you need to provide the MongoDB connection string in the `.env` file.
+
 ## Scripts
 
 ### Development
