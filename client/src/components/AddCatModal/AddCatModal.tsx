@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 type Props = {
   isShow?: boolean;
   onClose: () => void;
-  onSubmit: (cat: Omit<Cat, 'id'>) => void;
+  onSubmit: (cat: Omit<Cat, 'id' | 'owner'>) => void;
 };
 
 function AddCatModal({ isShow, onClose, onSubmit }: Props) {

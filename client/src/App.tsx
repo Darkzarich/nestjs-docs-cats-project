@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import {
   Loader as IconLoader,
@@ -109,7 +109,7 @@ function App() {
     showAddCatModal();
   };
 
-  const handleAddCat = async (cat: Omit<Cat, 'id'>) => {
+  const handleAddCat = async (cat: Omit<Cat, 'id' | 'owner'>) => {
     try {
       await Api.createCat(cat);
 
@@ -122,7 +122,7 @@ function App() {
     }
   };
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = useCallback(async () => {
     try {
       if (!user) {
         return;
@@ -138,12 +138,12 @@ function App() {
     } catch {
       clearUser();
     }
-  };
+  }, [setUser, clearUser, user]);
 
   useEffect(() => {
     fetchCurrentUser();
     fetchCats();
-  }, []);
+  }, [fetchCurrentUser]);
 
   return (
     <>

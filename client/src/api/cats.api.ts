@@ -13,6 +13,6 @@ export function deleteCat(id: Cat['id']) {
   return ApiClient.delete(`/api/cats/${id}`);
 }
 
-export function createCat(cat: Omit<Cat, 'id'>) {
+export function createCat(cat: Omit<Cat, 'id' | 'owner'>) {
   return ApiClient.post<Cat>('/api/cats', cat);
 }

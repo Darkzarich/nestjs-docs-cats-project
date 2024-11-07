@@ -31,7 +31,7 @@ function EditCatModal({ cat, isShow, onClose, onSave }: Props) {
   } = useInput(cat?.breed);
 
   const handleSave = () => {
-    onSave({ id: cat!.id, name, age: parseInt(age), breed });
+    onSave({ ...cat!, name, age: parseInt(age), breed });
 
     setName('');
     setAge('0');
