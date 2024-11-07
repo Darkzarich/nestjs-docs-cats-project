@@ -13,6 +13,7 @@ import {
   CATS_REPOSITORY,
   ICatsRepository,
 } from './repositories/cats.repository.interface';
+import { User } from '../user/schemas/user.schema';
 
 @Injectable()
 export class CatsService {
@@ -60,7 +61,10 @@ export class CatsService {
     // Checks if cat exists, throws an exception if doesn't
     const cat = await this.findById({ id });
 
-    if (cat.owner.toString() !== userId) {
+    // TODO: Come up with a better way to cast
+    const owner = cat.owner as User;
+
+    if (owner.id.toString() !== userId) {
       throw new ForbiddenException(['The current user does not own this cat']);
     }
   }
