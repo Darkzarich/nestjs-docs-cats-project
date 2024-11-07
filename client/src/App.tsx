@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import { useEffect, useState } from 'react';
 import {
   Loader as IconLoader,
   RefreshCw as IconRefreshCw,
@@ -17,13 +16,8 @@ import BaseButton from './components/Base/BaseButton/BaseButton';
 import { useUserStore } from './stores/user.store';
 
 function App() {
-  const { user, clearUser, setUser } = useUserStore(
-    useShallow((state) => ({
-      user: state.user,
-      clearUser: state.clearUser,
-      setUser: state.setUser,
-    })),
-  );
+  const user = useUserStore((state) => state.user);
+  const fetchCurrentUser = useUserStore((state) => state.fetchCurrentUser);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -121,24 +115,6 @@ function App() {
       window.alert(`Error adding a cat: ${error.response?.data.message}`);
     }
   };
-
-  const fetchCurrentUser = useCallback(async () => {
-    try {
-      if (!user) {
-        return;
-      }
-
-      const res = await Api.fetchCurrentUser();
-
-      if (!res.data) {
-        return;
-      }
-
-      setUser(res.data);
-    } catch {
-      clearUser();
-    }
-  }, [setUser, clearUser, user]);
 
   useEffect(() => {
     fetchCurrentUser();
