@@ -1,8 +1,9 @@
 ## Description
 
-Small fullstack project to try out some Nest.js concepts, examples from the docs, design patters and best practices as well as serving client side static content (for SPA).
+Small fullstack project to try out some NestJS concepts, examples from the docs, design patters and best practices as well as serving client side static content (for SPA).
+Technically, the project was not made from scratch, this is an extension of the project from the official NestJS docs with some additional features that were not originally present in the docs.
 
-For the server side, the project uses [Nest.js](https://nestjs.com/) + [MongoDB](https://www.mongodb.com/) as the database and [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) for the client side.
+For the server side, the project uses [NestJS](https://nestjs.com/) + [MongoDB](https://www.mongodb.com/) as the database and [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/) for the client side.
 
 Key features:
 
@@ -10,7 +11,7 @@ Key features:
 - JWT based **Authentication** (for demo reasons the token is valid for 60 seconds).
 - Implements **Repository Pattern** to work with the database models.
 
-The project's [hoppscotch](https://hoppscotch.io/) specification file is located in the `hoppscotch` directory.
+The project's [Hoppscotch](https://hoppscotch.io/) specification file is located in the `hoppscotch` directory.
 
 **NOTE**: Usually you'd serve the client side using a static file server like [Nginx](https://www.nginx.com/) or [Apache](https://httpd.apache.org/) but for the sake of simplicity, the project serves the client side from NestJS application. But during development, the client side will be served from [Vite](https://vitejs.dev/)'s dev server.
 
