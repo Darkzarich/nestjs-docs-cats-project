@@ -21,11 +21,19 @@
   background: var(--color-white);
   color: var(--color-black);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 15px;
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
   box-shadow:
     0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 500px;
+}
+
+@media only screen and (max-width: 600px) {
+  .modal__content {
+    max-width: 90%;
+  }
 }
 
 .modal__close-button {
