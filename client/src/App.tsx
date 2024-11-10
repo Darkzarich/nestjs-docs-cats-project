@@ -134,8 +134,11 @@ function App() {
 
         {!isLoading && !isError && (
           <>
-            <div className="cat-meta">
-              Number of cats: {cats.length}
+            <div className="cat-counter">
+              <p>
+                Total Cats: <span id="cat-count__count">{cats.length}</span>
+              </p>
+
               <BaseButton
                 className="icon-button"
                 onClick={fetchCats}
@@ -149,7 +152,7 @@ function App() {
                 )}
               </BaseButton>
             </div>
-            <div className="cats">
+            <div className="cats-list">
               <CatCardPlaceholder
                 onClick={handleShowAddCatModal}
                 isDisabled={!user}

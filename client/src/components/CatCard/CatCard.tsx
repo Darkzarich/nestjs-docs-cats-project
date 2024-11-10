@@ -1,6 +1,6 @@
 import { Cat } from '../../api/types';
 import './CatCard.css';
-import { X as IconX } from 'react-feather';
+import { Trash2 as IconTrash2 } from 'react-feather';
 import { Edit as IconEdit } from 'react-feather';
 
 type Props = {
@@ -13,14 +13,24 @@ type Props = {
 function CatCard({ cat, onDelete, onEdit, canChange }: Props) {
   return (
     <div className="cat">
-      <div className="cat__toolbar">
+      <div className="cat__tail" />
+
+      <h2 className="cat__name">{cat.name}</h2>
+
+      <p className="cat__data">Owner: {cat.owner.login}</p>
+
+      <p className="cat__data">Age: {cat.age}</p>
+
+      <p className="cat__data">Breed: {cat.breed}</p>
+
+      <div className="cat__actions">
         {canChange && (
           <button
             className="icon-button"
             title="Edit"
             onClick={() => onEdit(cat)}
           >
-            <IconEdit color="var(--color-primary)" />
+            <IconEdit className="cat__action-icon" />
           </button>
         )}
 
@@ -30,24 +40,10 @@ function CatCard({ cat, onDelete, onEdit, canChange }: Props) {
             title="Delete"
             onClick={() => onDelete(cat.id)}
           >
-            <IconX color="var(--color-error)" />
+            <IconTrash2 className="cat__action-icon" />
           </button>
         )}
       </div>
-
-      <h2 className="cat__name">{cat.name}</h2>
-
-      <p className="cat__data">
-        <span className="cat__data-label">Owner:</span> {cat.owner.login}
-      </p>
-
-      <p className="cat__data">
-        <span className="cat__data-label">Age:</span> {cat.age}
-      </p>
-
-      <p className="cat__data">
-        <span className="cat__data-label">Breed:</span> {cat.breed}
-      </p>
     </div>
   );
 }

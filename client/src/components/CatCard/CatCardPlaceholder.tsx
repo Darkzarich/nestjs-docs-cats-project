@@ -9,7 +9,7 @@ type Props = {
 
 function CatCardPlaceholder({ onClick, isDisabled }: Props) {
   return (
-    <div className="cat">
+    <div className="cat cat--placeholder">
       <IconPlusSquare
         onClick={onClick}
         className={`icon-button ${isDisabled ? 'icon-button--disabled' : ''}`}

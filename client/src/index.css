@@ -1,14 +1,17 @@
 :root {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
 
-  --card-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --card-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-  --color-primary: #3700b3;
+  --color-primary: #f4a261;
+  --color-primary-dark: #e98b40;
   --color-error: crimson;
   --color-white: #fff;
+  --color-black: #333;
+  --color-light-brown: #d4a373;
   --color-disabled: #ccc;
-  --color-gray: gray;
+  --color-gray: #666;
+  --color-background: #f8f3e7;
 }
 
 *,
@@ -19,8 +22,10 @@
 
 body {
   margin: 0;
+  background: var(--color-background);
 }
 
+p,
 h1,
 h2,
 h3,
@@ -32,7 +37,7 @@ h6 {
 
 .container {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 100px auto 20px;
 }
 
 .loader {
@@ -44,23 +49,27 @@ h6 {
 
 .error {
   padding: 10px;
-  color: red;
+  color: var(--color-error);
   margin: 10px;
   box-shadow: var(--card-box-shadow);
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
 }
 
-.cat-meta {
-  color: gray;
+.cat-counter {
   display: flex;
-  gap: 20px;
-  align-items: center;
+  color: var(--color-black);
   margin: 20px 0;
+  font-size: 1.2em;
+  align-items: center;
+  gap: 20px;
 }
 
-.cats {
+.cats-list {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .icon-button {

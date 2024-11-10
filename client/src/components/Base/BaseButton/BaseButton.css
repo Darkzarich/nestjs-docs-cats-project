@@ -1,14 +1,19 @@
 .base-button {
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 25px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  font-size: 16px;
-  cursor: pointer;
+}
+
+.base-button:hover {
+  background-color: var(--color-primary-dark);
 }
 
 .base-button:disabled {

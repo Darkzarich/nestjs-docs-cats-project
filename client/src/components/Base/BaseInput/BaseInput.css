@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  color: var(--color-black);
 }
 
 .base-input__label {
@@ -11,9 +12,9 @@
 .base-input__input {
   background: none;
   padding: 0;
-  font-size: 16px;
-  padding: 4px;
-  height: 32px;
+  font-size: 1em;
+  padding: 8px;
+  height: 36px;
   border: 1px solid;
   outline: none;
   border-radius: 8px;
