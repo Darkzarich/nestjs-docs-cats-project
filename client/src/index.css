@@ -52,8 +52,7 @@ h6 {
   color: var(--color-error);
   margin: 10px;
   box-shadow: var(--card-box-shadow);
-  border-top-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  background: var(--color-white);
 }
 
 .cat-counter {

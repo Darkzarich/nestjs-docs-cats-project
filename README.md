@@ -1,3 +1,14 @@
+# Cats Project 🐾
+
+<details>
+  <summary>Screenshot</summary>
+  <div align="center">
+
+  ![img](./screenshot.png)
+
+  </div>
+</details>
+
 ## Description
 
 Small fullstack project to try out some NestJS concepts, examples from the docs, design patters and best practices as well as serving client side static content (for SPA).
