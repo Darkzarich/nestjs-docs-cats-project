@@ -21,7 +21,7 @@ export class CatsService {
     @Inject(CATS_REPOSITORY) private catsRepository: ICatsRepository,
   ) {}
 
-  create(owner: string, catDto: CreateCatDto) {
+  async create(owner: string, catDto: CreateCatDto) {
     if (!owner) {
       throw new BadRequestException(['Owner was not provided']);
     }

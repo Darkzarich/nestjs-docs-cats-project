@@ -5,7 +5,7 @@ import { FindCatsDto } from '../dto/find-cats.dto';
 import { UpdateCatDto } from '../dto/update-cat.dto';
 import { Cat } from '../schemas/cat.schema';
 
-export const CATS_REPOSITORY = Symbol('CatsRepository');
+export const CATS_REPOSITORY = Symbol();
 
 export interface ICatsRepository {
   create(owner: User['id'], createCatDto: CreateCatDto): Promise<Cat>;
