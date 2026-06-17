@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Cat } from '../schemas/cat.schema';
 import { UpdateCatDto } from '../dto/update-cat.dto';
-import { ICatsRepository } from './cats.repository.interface';
+import { ICatsRepository, CatWithId } from './cats.repository.interface';
 import { FindCatsDto } from '../dto/find-cats.dto';
 import { FindByIdDto } from '../dto/find-by-id.dto';
 import { CreateCatDto } from '../dto/create-cat.dto';
@@ -9,12 +8,15 @@ import { User } from 'src/user/schemas/user.schema';
 
 @Injectable()
 export class InMemoryCatsRepository implements ICatsRepository {
-  private readonly cats: Cat[] = [];
+  private readonly cats: CatWithId[] = [];
 
-  async create(owner: User['id'], cat: CreateCatDto) {
+  async create(owner: User['_id'], cat: CreateCatDto) {
     const newCat = {
       id: crypto.randomUUID(),
-      owner,
+      owner: {
+        login: owner,
+        id: owner,
+      },
       ...cat,
     };
 

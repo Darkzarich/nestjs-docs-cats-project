@@ -12,36 +12,68 @@ import { User } from 'src/user/schemas/user.schema';
 export class MongoCatsRepository implements ICatsRepository {
   constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>) {}
 
-  async create(owner: User['id'], cat: Cat) {
+  async create(owner: User['_id'], cat: Cat) {
     const newCat = await this.catModel.create({
       owner,
       ...cat,
     });
 
-    return newCat.toJSON();
+    return {
+      ...newCat,
+      // TODO: Fix wrong login
+      owner: { id: owner, login: owner },
+      id: newCat._id,
+    };
   }
   async findAll({ limit }: FindCatsDto) {
     const cats = await this.catModel
       .find()
-      .populate('owner', { id: 1, login: 1 })
-      .limit(limit);
+      .populate<{
+        owner: { _id: string; login: string };
+      }>('owner', { login: 1 })
+      .limit(limit)
+      .lean();
 
-    return cats.map((cat) => cat.toJSON());
+    return cats.map((cat) => ({
+      ...cat,
+      id: cat._id,
+      owner: cat.owner ? { id: cat.owner._id, login: cat.owner.login } : null,
+    }));
   }
   async findById({ id }: FindByIdDto) {
     const cat = await this.catModel
       .findById(id)
-      .populate('owner', { id: 1, login: 1 });
+      .populate<{
+        owner: { _id: string; login: string };
+      }>('owner', { login: 1 })
+      .lean();
 
-    return cat.toJSON();
+    return {
+      ...cat,
+      id: cat._id,
+      owner: cat.owner ? { id: cat.owner._id, login: cat.owner.login } : null,
+    };
   }
   async update(id: string, updateCatDto: UpdateCatDto) {
     const updatedCat = await this.catModel.findByIdAndUpdate(id, updateCatDto, {
       new: true,
+      lean: true,
+      populate: {
+        path: 'owner',
+        select: 'login',
+      },
     });
 
-    return updatedCat.toJSON();
+    return {
+      ...updatedCat,
+      id: updatedCat._id,
+      owner:
+        typeof updatedCat.owner === 'object'
+          ? { id: updatedCat.owner._id, login: updatedCat.owner.login }
+          : null,
+    };
   }
+
   async delete(id: string) {
     await this.catModel.findByIdAndDelete(id);
   }

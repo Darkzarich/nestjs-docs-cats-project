@@ -3,19 +3,10 @@ import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/user/schemas/user.schema';
 
 @Schema({
-  toJSON: {
-    virtuals: true,
-    versionKey: false,
-    transform: (doc, ret) => {
-      ret.id = ret._id;
-      delete ret._id;
-
-      return ret;
-    },
-  },
+  versionKey: false,
 })
 export class Cat {
-  id: string;
+  _id: string;
 
   @Prop()
   name: string;
@@ -27,7 +18,7 @@ export class Cat {
   breed: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' })
-  owner: string | User;
+  owner: string | Pick<User, '_id' | 'login'>;
 }
 
 export type CatDocument = HydratedDocument<Cat>;

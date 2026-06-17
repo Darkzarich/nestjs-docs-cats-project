@@ -31,10 +31,10 @@ export class UserService {
 
     const user = await this.userRepository.create(signUpDto);
 
-    const accessToken = await this.jwtService.signAsync({ id: user.id });
+    const accessToken = await this.jwtService.signAsync({ id: user._id });
 
     return {
-      id: user.id,
+      id: user._id,
       login: user.login,
       token: accessToken,
     };
@@ -53,10 +53,10 @@ export class UserService {
       throw new WrongCredentialsError();
     }
 
-    const accessToken = await this.jwtService.signAsync({ id: user.id });
+    const accessToken = await this.jwtService.signAsync({ id: user._id });
 
     return {
-      id: user.id,
+      id: user._id,
       login: user.login,
       token: accessToken,
     };
@@ -70,10 +70,10 @@ export class UserService {
     }
 
     // Renew token so it's expiration date is updated
-    const accessToken = await this.jwtService.signAsync({ id: user.id });
+    const accessToken = await this.jwtService.signAsync({ id: user._id });
 
     return {
-      id: user.id,
+      id: user._id,
       login: user.login,
       token: accessToken,
     };

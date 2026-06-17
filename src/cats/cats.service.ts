@@ -13,7 +13,6 @@ import {
   CATS_REPOSITORY,
   ICatsRepository,
 } from './repositories/cats.repository.interface';
-import { User } from '../user/schemas/user.schema';
 
 @Injectable()
 export class CatsService {
@@ -26,11 +25,11 @@ export class CatsService {
       throw new BadRequestException(['Owner was not provided']);
     }
 
-    this.catsRepository.create(owner, catDto);
+    return this.catsRepository.create(owner, catDto);
   }
 
   async findAll(findCatsDto: FindCatsDto = {}) {
-    return await this.catsRepository.findAll(findCatsDto);
+    return this.catsRepository.findAll(findCatsDto);
   }
 
   async findById({ id }: FindByIdDto) {
@@ -61,10 +60,7 @@ export class CatsService {
     // Checks if cat exists, throws an exception if doesn't
     const cat = await this.findById({ id });
 
-    // TODO: Come up with a better way to cast
-    const owner = cat.owner as User;
-
-    if (owner.id.toString() !== userId) {
+    if (cat.owner?.id.toString() !== userId) {
       throw new ForbiddenException(['The current user does not own this cat']);
     }
   }

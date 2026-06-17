@@ -18,18 +18,20 @@ export class MongoUserRepository implements IUserRepository {
   }
 
   async findByLogin(signInDto: SignInDto) {
-    const user = await this.userModel.findOne({ login: signInDto.login });
+    const user = await this.userModel
+      .findOne({ login: signInDto.login })
+      .lean();
 
     if (!user) return null;
 
-    return user.toJSON();
+    return user;
   }
 
   async findById(id: string) {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id).lean();
 
     if (!user) return null;
 
-    return user.toJSON();
+    return user;
   }
 }

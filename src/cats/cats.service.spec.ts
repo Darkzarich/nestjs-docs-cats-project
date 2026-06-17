@@ -78,11 +78,11 @@ describe('CatsService', () => {
   describe('findById', () => {
     it('should return cat when found', async () => {
       const cat = {
-        id: '1',
+        _id: '1',
         name: 'Fluffy',
         age: 3,
         breed: 'Persian',
-        owner: { id: 'owner-1' } as User,
+        owner: { _id: 'owner-1' } as User,
       };
 
       mockCatsRepository.findById.mockResolvedValue(cat);
@@ -108,11 +108,11 @@ describe('CatsService', () => {
       const catId = 'cat-1';
       const updateDto = new UpdateCatDto();
       const mockCat = {
-        id: catId,
+        _id: catId,
         name: 'Fluffy',
         age: 3,
         breed: 'Persian',
-        owner: { id: userId } as User,
+        owner: { _id: userId } as User,
       };
 
       mockCatsRepository.findById.mockResolvedValue(mockCat);
@@ -125,11 +125,11 @@ describe('CatsService', () => {
 
     it('should throw ForbiddenException when user does not own cat', async () => {
       const mockCat = {
-        id: 'cat-1',
+        _id: 'cat-1',
         name: 'Fluffy',
         age: 3,
         breed: 'Persian',
-        owner: { id: 'other-user' } as User,
+        owner: { _id: 'other-user' } as User,
       };
 
       mockCatsRepository.findById.mockResolvedValue(mockCat);
@@ -145,11 +145,11 @@ describe('CatsService', () => {
       const userId = 'user-1';
       const catId = 'cat-1';
       const mockCat = {
-        id: catId,
+        _id: catId,
         name: 'Fluffy',
         age: 3,
         breed: 'Persian',
-        owner: { id: userId } as User,
+        owner: { _id: userId } as User,
       };
 
       mockCatsRepository.findById.mockResolvedValue(mockCat);
@@ -161,11 +161,11 @@ describe('CatsService', () => {
 
     it('should throw ForbiddenException when user does not own cat', async () => {
       const mockCat = {
-        id: 'cat-1',
+        _id: 'cat-1',
         name: 'Fluffy',
         age: 3,
         breed: 'Persian',
-        owner: { id: 'other-user' } as User,
+        owner: { _id: 'other-user' } as User,
       };
 
       mockCatsRepository.findById.mockResolvedValue(mockCat);
